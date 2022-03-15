@@ -16,7 +16,7 @@ jobs:
       - checkout
       - run:
           name: "Release APK"
-          command: "./gradlew app:assembleRelease"
+          command: "cd android && ./gradlew clean && ./gradlew app:assembleRelease"
 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
