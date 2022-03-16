@@ -16,15 +16,6 @@ jobs:
     # See: https://circleci.com/docs/2.0/configuration-reference/#steps
     steps:
       - checkout
-      - run:
-          name: "Install NPM"
-          command: "npm install -g"
-      - run:
-          name: "Install Yarn"
-          command: "npm install --global yarn"
-      - run:
-          name: "Install Dependencies"
-          command: "yarn install"
       - restore_cache:
           key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
       - run:
