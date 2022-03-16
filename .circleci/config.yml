@@ -18,7 +18,7 @@ jobs:
       - checkout
       - run:
           name: "Install NPM"
-          command: "sudo npm install -g"
+          command: "npm install -g"
       - run:
           name: "Install Yarn"
           command: "npm install --global yarn"
