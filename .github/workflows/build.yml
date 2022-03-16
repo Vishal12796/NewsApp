@@ -24,3 +24,5 @@ jobs:
           run: bundle install
       - name: Install packages
           run: yarn install
+      - name: Build Android App
+          run: bundle exec fastlane build_android_dev versionName:1.2
