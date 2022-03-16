@@ -39,7 +39,6 @@ platform :android do
       upload_to_play_store(
         package_name: 'com.newsapi',
         track: "internal",
-        json_key: "",
         apk: "./android/app/app.apk"
       )
     end
