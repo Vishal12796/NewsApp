@@ -1,80 +1,33 @@
-fastlane_version '2.53.1'
-
-before_all do
-  ensure_git_branch
-  ensure_git_status_clean
-  git_pull
-end
-
-# platform :ios do
-#    # iOS Lanes
-# end
+default_platform(:android)
 
 platform :android do
-  # Android Lanes
-  desc 'Ship to Playstore Beta.'
-  lane :beta do
+  desc "Build aab file"
+  lane :build do
+    gradle(
+      task: 'bundle',
+      build_type: 'Release'
+    )
+  end
+
+  desc "Release for alpha testing"
+  lane :alpha_release_to_play_store do
     build
-    supply(track: 'beta', track_promote_to: 'beta')
-    git_commit(path: ['./android/gradle.properties'], message: 'Bump versionCode')
-    push_to_git_remote
+    upload_to_play_store(
+      package_name: 'com.newsapi',
+      track: "alpha",
+      skip_upload_apk: true,
+      aab: "app/build/outputs/bundle/release/app-release.aab"
+    )
+  end
+
+  desc "Release for production"
+  lane :production_release_to_play_store do
+    build
+    upload_to_play_store(
+      package_name: 'com.newsapi',
+      track: "production",
+      skip_upload_apk: true,
+      aab: "app/build/outputs/bundle/release/app-release.aab"
+    )
   end
 end
-
-# # This file contains the fastlane.tools configuration
-# # You can find the documentation at https://docs.fastlane.tools
-# #
-# # For a list of all available actions, check out
-# #
-# #     https://docs.fastlane.tools/actions
-# #
-# # For a list of all available plugins, check out
-# #
-# #     https://docs.fastlane.tools/plugins/available-plugins
-# #
-# # Uncomment the line if you want fastlane to automatically update itself
-# # update_fastlane
-
-# default_platform(:android)
-
-# version_code = ENV["GITHUB_RUN_NUMBER"] || 86
-
-# platform :android do
-#   desc "Runs lint check"
-#   lane :lint do
-#     gradle(task: "lintDevRelease")
-#   end
-
-#   desc "Build Generate"
-
-#     # CMD fastlane Build gnerate
-#     desc "Build generate for QA"
-#     lane :build_android_dev do
-
-#       # Bundle the app
-#       gradle(
-#         task: 'bundle',
-#         build_type: 'Release',
-#         project_dir: "android/"
-#       )
-
-#       # Upload to Play Store's Internal Testing
-#       upload_to_play_store(
-#         package_name: 'com.newsapi',
-#         track: "internal",
-#         apk: "./android/app/app.apk"
-#       )
-#     end
-
-#     # desc "Deploy a new alpha version to the Google Play Store"
-#     # lane :build_android_dev do
-#     #   gradle(
-#     #     task: "assemble",
-#     #     build_type: "Release"
-#     #   )
-#     #   supply(
-#     #     track: "alpha",
-#     #     apk: "#{lane_context[SharedValues::GRADLE_APK_OUTPUT_PATH]}"
-#     #   )
-#     # end
-# end

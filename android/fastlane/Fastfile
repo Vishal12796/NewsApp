@@ -16,35 +16,34 @@
 default_platform(:android)
 
 platform :android do
-  desc "Runs all the tests"
-  lane :test do
-    gradle(task: "test")
-  end
-
-  desc "Submit a new Beta Build to Crashlytics Beta"
-  lane :beta do
-    gradle(task: "clean assembleRelease")
-    crashlytics
-  
-    # sh "your_script.sh"
-    # You can also use other beta testing services here
-  end
-
-  desc "Deploy a new version to the Google Play"
-  lane :deploy do
-    gradle(task: "clean assembleRelease")
-    upload_to_play_store
-  end
-
-  desc "Deploy a new alpha version to the Google Play Store"
-  lane :alpha do
+  desc "Build aab file"
+  lane :build do
     gradle(
-      task: "assemble",
-      build_type: "Release"
+      task: 'bundle',
+      build_type: 'Release'
     )
-    supply(
+  end
+
+  desc "Release for alpha testing"
+  lane :alpha_release_to_play_store do
+    build
+    upload_to_play_store(
+      package_name: 'com.newsapi',
       track: "alpha",
-      apk: "#{lane_context[SharedValues::GRADLE_APK_OUTPUT_PATH]}"
+      skip_upload_apk: true,
+      aab: "app/build/outputs/bundle/release/app-release.aab"
+    )
+  end
+
+  desc "Release for production"
+  lane :production_release_to_play_store do
+    build
+    upload_to_play_store(
+      package_name: 'com.newsapi',
+      track: "production",
+      skip_upload_apk: true,
+      aab: "app/build/outputs/bundle/release/app-release.aab"
     )
   end
 end
+
