@@ -1,0 +1,30 @@
+name: Build Pipeline Workflow
+
+on: 
+  push:
+    branches:[fastlane]
+
+jobs:
+  build-production:
+    runs-on: macos-latest
+  
+    steps: 
+    - name: Checkout Repository in Github VM
+      uses: actions/checkout@v2
+    - name: Run Node in Github VM
+      uses: actions/setup-node@master
+    - name: Install Dependencies
+      run: |
+        npm install
+    
+    - name: Install Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: 2.6
+    - name: Install Fastlane
+      run: |
+        bundle install
+        bundle update fastlane
+    - name: Build and Publish Mobile App
+      run: |
+        bundle exec fastlane android distribute
