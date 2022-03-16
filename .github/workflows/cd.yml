@@ -1,8 +1,10 @@
 name: Build Pipeline Workflow
 
+# Execute PR Pipeline Workflow on pull requests to fastlane
 on: 
   push:
-    branches:[fastlane]
+    branches:
+      - fastlane
 
 jobs:
   build-production:
