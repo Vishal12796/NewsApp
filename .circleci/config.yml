@@ -17,7 +17,13 @@ jobs:
     steps:
       - checkout
       - run:
-          name: "install yarn"
+          name: "Install NPM"
+          command: "sudo npm install -g"
+      - run:
+          name: "Install Yarn"
+          command: "npm install --global yarn"
+      - run:
+          name: "Install Dependencies"
           command: "yarn install"
       - restore_cache:
           key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
