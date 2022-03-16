@@ -1,0 +1,26 @@
+name: Build Pipeline Workflow
+
+# Execute PR Pipeline Workflow on pull requests to master
+on:
+  release:
+    type: [published]
+
+
+jobs:
+  release-android:
+    name: Build and release Android app
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '10.x'
+      - uses: actions/setup-ruby@v1
+        with:
+         ruby-version: '2.x'
+      - name: Setup react-native kernel and increase watchers
+          run: echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
+      - name: Install Fastlane
+          run: bundle install
+      - name: Install packages
+          run: yarn install
