@@ -24,33 +24,33 @@ platform :android do
 
   desc "Build Generate"
 
-    # # CMD fastlane Build gnerate
-    # desc "Build generate for QA"
-    # lane :build_android_dev do
-
-    #   # Bundle the app
-    #   gradle(
-    #     task: 'bundle',
-    #     build_type: 'Release',
-    #     project_dir: "android/"
-    #   )
-
-    #   # Upload to Play Store's Internal Testing
-    #   upload_to_play_store(
-    #     package_name: 'com.newsapi',
-    #     track: "internal",
-    #   )
-    # end
-
-    desc "Deploy a new alpha version to the Google Play Store"
+    # CMD fastlane Build gnerate
+    desc "Build generate for QA"
     lane :build_android_dev do
+
+      # Bundle the app
       gradle(
-        task: "assemble",
-        build_type: "Release"
+        task: 'bundle',
+        build_type: 'Release',
+        project_dir: "android/"
       )
-      supply(
-        track: "alpha",
-        apk: "#{lane_context[SharedValues::GRADLE_APK_OUTPUT_PATH]}"
+
+      # Upload to Play Store's Internal Testing
+      upload_to_play_store(
+        package_name: 'com.newsapi',
+        track: "internal",
       )
     end
+
+    # desc "Deploy a new alpha version to the Google Play Store"
+    # lane :build_android_dev do
+    #   gradle(
+    #     task: "assemble",
+    #     build_type: "Release"
+    #   )
+    #   supply(
+    #     track: "alpha",
+    #     apk: "#{lane_context[SharedValues::GRADLE_APK_OUTPUT_PATH]}"
+    #   )
+    # end
 end
