@@ -4,8 +4,7 @@ name: Build Pipeline Workflow
 on:
   release:
     type: [published]
-
-
+    
 jobs:
   release-android:
     name: Build staging app and release to alpha track android
