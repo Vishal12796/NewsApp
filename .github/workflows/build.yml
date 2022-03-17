@@ -9,7 +9,7 @@ jobs:
   release-android:
     name: Build staging app and release to alpha track android
     needs: [increment-app-build]
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     steps:
       - uses: actions/checkout@v1
       - uses: actions/setup-node@v1
