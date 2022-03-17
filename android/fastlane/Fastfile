@@ -18,27 +18,27 @@ default_platform(:android)
 platform :android do
   desc "Build aab file"
   lane :build do
-    # gradle(
-    #   task: 'bundle',
-    #   build_type: 'release'
+    gradle(
+      task: 'bundle',
+      build_type: 'release'
+    )
+  end
+
+  desc "Release for alpha testing"
+  lane :android_release_build do
+    build
+    # upload_to_play_store(
+    #   package_name: 'com.newsapi',
+    #   track: "alpha",
+    #   skip_upload_apk: true,
+    #   aab: "app/build/outputs/bundle/release/app-release.aab"
     # )
     gradle(
       task: "assemble",
       build_type: "Release",
-      print_command: false,
+      print_command: true,
     )
   end
-
-  # desc "Release for alpha testing"
-  # lane :android_release_build do
-  #   build
-  #   upload_to_play_store(
-  #     package_name: 'com.newsapi',
-  #     track: "alpha",
-  #     skip_upload_apk: true,
-  #     aab: "app/build/outputs/bundle/release/app-release.aab"
-  #   )
-  # end
 
   # desc "Release for production"
   # lane :production_release_to_play_store do
