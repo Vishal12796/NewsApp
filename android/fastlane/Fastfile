@@ -31,7 +31,7 @@ platform :android do
       package_name: 'com.newsapi',
       track: "alpha",
       skip_upload_apk: true,
-      aab: "app/app-release.aab"
+      aab: "./android/app/build/outputs/bundle/release/app.aab"
     )
   end
 
@@ -42,7 +42,7 @@ platform :android do
       package_name: 'com.newsapi',
       track: "production",
       skip_upload_apk: true,
-      aab: "app/app-release.aab"
+      aab: "./android/app/build/outputs/bundle/release/app.aab"
     )
   end
 end
