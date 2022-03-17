@@ -32,4 +32,4 @@ jobs:
     - name: Build and Publish Mobile App
       run: |
         cd android
-        bundle exec fastlane android alpha_release_to_play_store
+        fastlane android alpha_release_to_play_store
