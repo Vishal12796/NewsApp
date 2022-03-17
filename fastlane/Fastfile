@@ -1,3 +1,18 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
 default_platform(:android)
 
 platform :android do
@@ -5,14 +20,14 @@ platform :android do
   lane :build do
     gradle(
       task: 'bundle',
-      build_type: 'Release'
+      build_type: 'release'
     )
   end
 
   desc "Release for alpha testing"
-  lane :alpha_release_to_play_store do
+  lane :android_release_build do
     build
-    upload_to_play_store(
+    android_release_build(
       package_name: 'com.newsapi',
       track: "alpha",
       skip_upload_apk: true,
@@ -20,14 +35,15 @@ platform :android do
     )
   end
 
-  desc "Release for production"
-  lane :production_release_to_play_store do
-    build
-    upload_to_play_store(
-      package_name: 'com.newsapi',
-      track: "production",
-      skip_upload_apk: true,
-      aab: "app/build/outputs/bundle/release/app-release.aab"
-    )
-  end
+  # desc "Release for production"
+  # lane :production_release_to_play_store do
+  #   build
+  #   upload_to_play_store(
+  #     package_name: 'com.newsapi',
+  #     track: "production",
+  #     skip_upload_apk: true,
+  #     aab: "app/build/outputs/bundle/release/app-release.aab"
+  #   )
+  # end
 end
+
